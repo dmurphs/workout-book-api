@@ -1,15 +1,46 @@
 from django.conf.urls import url
 from .views import (
+    CreateWorkoutView, 
+    ListWorkoutsView, 
+    DetailWorkoutView, 
+    UpdateWorkoutView,
+
     CreateLiftView, 
     ListLiftsView, 
     DetailLiftView, 
     UpdateLiftView, 
-    CreateSetView, 
-    ListSetsView,
-    DetailSetView,
-    UpdateSetView)
+
+    CreateLiftEntryView,
+
+
+    # CreateSetView, 
+    # ListSetsView,
+    # DetailSetView,
+    # UpdateSetView
+    )
 
 urlpatterns = [
+    url(
+       regex=r'^create_workout',
+       view=CreateWorkoutView.as_view(),
+       name='create_workout'
+    ),
+    url(
+        regex=r'^list_workouts',
+        view=ListWorkoutsView.as_view(),
+        name='list_workouts'
+    ),
+    url(
+        regex=r'^workout_detail/(?P<pk>\d+)',
+        view=DetailWorkoutView.as_view(),
+        name='workout_detail'
+    ),
+    url(
+        regex=r'^update_workout/(?P<pk>\d+)',
+        view=UpdateWorkoutView.as_view(),
+        name='update_workout'
+    ),
+
     url(
        regex=r'^create_lift',
        view=CreateLiftView.as_view(),
@@ -32,23 +63,29 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^create_set',
-        view=CreateSetView.as_view(),
-        name='create_set'
+       regex=r'^new_lift_entry/(?P<pk>\d+)',
+       view=CreateLiftEntryView.as_view(),
+       name='create_lift_entry'
     ),
-    url(
-        regex=r'^list_sets',
-        view=ListSetsView.as_view(),
-        name='list_sets'
-    ),
-    url(
-        regex=r'^set_detail/(?P<pk>\d+)',
-        view=DetailSetView.as_view(),
-        name='set_detail'
-    ),
-    url(
-        regex=r'^update_set/(?P<pk>\d+)',
-        view=UpdateSetView.as_view(),
-        name='update_set'
-    ),
+
+    # url(
+    #     regex=r'^create_set',
+    #     view=CreateSetView.as_view(),
+    #     name='create_set'
+    # ),
+    # url(
+    #     regex=r'^list_sets',
+    #     view=ListSetsView.as_view(),
+    #     name='list_sets'
+    # ),
+    # url(
+    #     regex=r'^set_detail/(?P<pk>\d+)',
+    #     view=DetailSetView.as_view(),
+    #     name='set_detail'
+    # ),
+    # url(
+    #     regex=r'^update_set/(?P<pk>\d+)',
+    #     view=UpdateSetView.as_view(),
+    #     name='update_set'
+    # ),
 ]

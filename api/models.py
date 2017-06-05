@@ -9,6 +9,16 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
+class Workout(Base):
+    user = models.ForeignKey(User)
+
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    date = models.DateField()
+
+    def __str__(self):
+        return self.name
+
 class Lift(Base):
     user = models.ForeignKey(User)
 
@@ -18,21 +28,27 @@ class Lift(Base):
     def __str__(self):
         return self.name
 
-class Set(Base):
+class LiftEntry(Base):
+    workout = models.ForeignKey(Workout)
     lift = models.ForeignKey(Lift)
+
+    class Meta:
+        verbose_name_plural = 'Lift Entries'
+
+class Set(Base):
+    lift_entry = models.ForeignKey(LiftEntry)
     
-    entry_date = models.DateField()
     set_num = models.SmallIntegerField()
     num_reps = models.SmallIntegerField()
+    weight = models.SmallIntegerField()
 
-class Run(Base):
-    user = models.ForeignKey(User)
+class RunEntry(Base):
+    workout = models.ForeignKey(Workout)
 
     notes = models.TextField()
     distance = models.DecimalField(max_digits=5, decimal_places=2)
     duration = models.DurationField()
     elevation_delta = models.DecimalField(max_digits=7, decimal_places=2)
-    entry_date = models.DateField()
 
     class Meta:
-        verbose_name_plural = "Run Entries"
+        verbose_name_plural = 'Run Entries'
