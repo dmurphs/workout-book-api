@@ -11,29 +11,28 @@ class Base(models.Model):
 
 class Lift(Base):
     user = models.ForeignKey(User)
+
     name = models.CharField(max_length=50)
     description = models.TextField()
 
-class LiftEntry(Base):
-    lift = models.ForeignKey(Lift)
-
-    notes = models.TextField()
-    duration = models.DurationField()
-
-    class Meta:
-        verbose_name_plural = "Lift Entries"
+    def __str__(self):
+        return self.name
 
 class Set(Base):
-    log_entry = models.ForeignKey(LiftEntry)
-
+    lift = models.ForeignKey(Lift)
+    
+    entry_date = models.DateField()
     set_num = models.SmallIntegerField()
     num_reps = models.SmallIntegerField()
 
-class RunEntry(Base):
+class Run(Base):
+    user = models.ForeignKey(User)
+
     notes = models.TextField()
     distance = models.DecimalField(max_digits=5, decimal_places=2)
     duration = models.DurationField()
     elevation_delta = models.DecimalField(max_digits=7, decimal_places=2)
+    entry_date = models.DateField()
 
     class Meta:
         verbose_name_plural = "Run Entries"
