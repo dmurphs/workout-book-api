@@ -17,7 +17,7 @@ class LiftEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LiftEntry
-        fields = ('workout','lift')
+        fields = ('lift',)
 
 class SetSerializer(serializers.ModelSerializer):
 

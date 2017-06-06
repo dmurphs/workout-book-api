@@ -11,6 +11,9 @@ from .views import (
     UpdateLiftView, 
 
     CreateLiftEntryView,
+    ListLiftEntriesView,
+    DetailLiftEntryView,
+    UpdateLiftEntryView
 
 
     # CreateSetView, 
@@ -63,10 +66,25 @@ urlpatterns = [
     ),
 
     url(
-       regex=r'^new_lift_entry/(?P<pk>\d+)',
+       regex=r'^(?P<workout_id>\d+)/new_lift_entry',
        view=CreateLiftEntryView.as_view(),
        name='create_lift_entry'
     ),
+    url(
+        regex=r'^(?P<workout_id>\d+)/list_lift_entries',
+        view=ListLiftEntriesView.as_view(),
+        name='list_lift_entries'
+    ),
+    url(
+        regex=r'^lift_entry_detail/(?P<pk>\d+)',
+        view=DetailLiftEntryView.as_view(),
+        name='lift_entry_detail'
+    ),
+    url(
+        regex=r'^lift_entry_update/(?P<pk>\d+)',
+        view=UpdateLiftEntryView.as_view(),
+        name='update_lift_entry'
+    )
 
     # url(
     #     regex=r'^create_set',
