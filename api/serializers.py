@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Workout, Lift, LiftEntry, Set
+from .models import Workout, Lift, LiftEntry, Set, RunEntry
 
 class WorkoutSerializer(serializers.ModelSerializer):
 
@@ -23,4 +23,10 @@ class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Set
-        fields = ('lift_entry', 'set_num', 'num_reps', 'weight')
+        fields = ('set_num', 'num_reps', 'weight')
+
+class RunEntrySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RunEntry
+        fields = ('notes', 'distance', 'duration', 'elevation_delta')

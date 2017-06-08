@@ -32,6 +32,9 @@ class LiftEntry(Base):
     workout = models.ForeignKey(Workout)
     lift = models.ForeignKey(Lift)
 
+    def __str__(self):
+        return 'Lift: {0}, {1}, {2}'.format(str(self.workout),str(self.lift),self.when_created)
+
     class Meta:
         verbose_name_plural = 'Lift Entries'
 
@@ -49,6 +52,9 @@ class RunEntry(Base):
     distance = models.DecimalField(max_digits=5, decimal_places=2)
     duration = models.DurationField()
     elevation_delta = models.DecimalField(max_digits=7, decimal_places=2)
+
+    def __str__(self):
+        return 'Run: {0}, {1}'.format(str(self.workout),self.when_created)
 
     class Meta:
         verbose_name_plural = 'Run Entries'

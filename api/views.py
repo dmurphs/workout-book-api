@@ -4,10 +4,11 @@ from rest_framework.generics import CreateAPIView,UpdateAPIView, ListAPIView, Re
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Lift, LiftEntry, Set, Workout
-from .permissions import ObjectUserMatches, ParentWorkoutUserMatches
-from .serializers import LiftSerializer, LiftEntrySerializer, SetSerializer, WorkoutSerializer
+from .models import Lift, LiftEntry, Set, Workout, RunEntry
+from .permissions import ObjectUserMatches, ParentWorkoutUserMatches, ParentEntryWorkoutUserMatches
+from .serializers import LiftSerializer, LiftEntrySerializer, SetSerializer, WorkoutSerializer, RunEntrySerializer
 
+# Workout Views
 class CreateWorkoutView(CreateAPIView):
     permission_classes = (ObjectUserMatches,)
 
@@ -44,6 +45,7 @@ class UpdateWorkoutView(UpdateAPIView):
     serializer_class = WorkoutSerializer
     queryset = Workout.objects.all()
 
+# Lift Views
 class CreateLiftView(CreateAPIView):
     permission_classes = (ObjectUserMatches,)
 
@@ -73,7 +75,6 @@ class UpdateLiftView(UpdateAPIView):
     queryset = Lift.objects.all()
 
 # Lift Entry Views
-
 class CreateLiftEntryView(CreateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
     serializer_class = LiftEntrySerializer
@@ -93,7 +94,6 @@ class ListLiftEntriesView(ListAPIView):
         lift_entries = LiftEntry.objects.filter(workout=workout)
         return lift_entries
 
-
 class DetailLiftEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
@@ -108,33 +108,65 @@ class UpdateLiftEntryView(UpdateAPIView):
 
 
 # Set Views
+class CreateSetView(CreateAPIView):
+    permission_classes = (ParentEntryWorkoutUserMatches,)
+    serializer_class = SetSerializer
 
-# class CreateSetView(CreateAPIView):
-#     permission_classes = (ParentWorkoutUserMatches,)
-#     serializer_class = SetSerializer
+    def perform_create(self, serializer):
+        lift_entry_id = self.kwargs['lift_entry_id']
+        lift_entry = LiftEntry.objects.get(pk=lift_entry_id)
+        serializer.save(lift_entry=lift_entry)
 
-# class ListSetsView(ListAPIView):
-#     permission_classes = (ParentWorkoutUserMatches,)
-#     serializer_class = SetSerializer
+class ListSetsView(ListAPIView):
+    permission_classes = (ParentEntryWorkoutUserMatches,)
+    serializer_class = SetSerializer
 
-#     def get_queryset(self):
-#         default_date = datetime.datetime.now().date()
+    def get_queryset(self):
+        lift_entry_id = self.kwargs['lift_entry_id']
+        lift_entry = LiftEntry.objects.get(pk=lift_entry_id)
+        sets = Set.objects.filter(lift_entry=lift_entry)
+        return sets
 
-#         query_params = self.request.query_params
-#         start_date = query_params['start_date'] if 'start_date' in query_params else default_date
-#         end_date = query_params['end_date'] if 'end_date' in query_params else default_date
+class DetailSetView(RetrieveAPIView):
+    permission_classes = (ParentEntryWorkoutUserMatches,)
 
-#         filtered_sets = Set.objects.filter(entry_date__range=(start_date,start_date),lift__user=self.request.user)
+    serializer_class = SetSerializer
+    queryset = Set.objects.all()
 
-#         return filtered_sets
+class UpdateSetView(UpdateAPIView):
+    permission_classes = (ParentEntryWorkoutUserMatches,)
 
-# class DetailSetView(RetrieveAPIView):
-#     permission_classes = (ParentWorkoutUserMatches,)
-#     serializer_class = SetSerializer
-#     queryset = Set.objects.all()
+    serializer_class = SetSerializer
+    queryset = Set.objects.all()
 
-# class UpdateSetView(UpdateAPIView):
-#     permission_classes = (ParentWorkoutUserMatches,)
-#     serializer_class = SetSerializer
-#     queryset = Set.objects.all()
+# Run Entry Views
+class CreateRunEntryView(CreateAPIView):
+    permission_classes = (ParentWorkoutUserMatches,)
+    serializer_class = RunEntrySerializer
 
+    def perform_create(self, serializer):
+        workout_id = self.kwargs['workout_id']
+        workout = Workout.objects.get(pk=workout_id)
+        serializer.save(workout=workout)
+
+class ListRunEntriesView(ListAPIView):
+    permission_classes = (ParentWorkoutUserMatches,)
+    serializer_class = RunEntrySerializer
+
+    def get_queryset(self):
+        workout_id = self.kwargs['workout_id']
+        workout = get_object_or_404(Workout.objects.all(), pk=workout_id)
+        run_entries = RunEntry.objects.filter(workout=workout)
+        return run_entries
+
+class DetailRunEntryView(RetrieveAPIView):
+    permission_classes = (ParentWorkoutUserMatches,)
+
+    serializer_class = RunEntrySerializer
+    queryset = RunEntry.objects.all()
+
+class UpdateRunEntryView(UpdateAPIView):
+    permission_classes = (ParentWorkoutUserMatches,)
+
+    serializer_class = RunEntrySerializer
+    queryset = RunEntry.objects.all()
