@@ -32,6 +32,8 @@ class LiftEntry(Base):
     workout = models.ForeignKey(Workout)
     lift = models.ForeignKey(Lift)
 
+    notes = models.TextField()
+
     def __str__(self):
         return 'Lift: {0}, {1}, {2}'.format(str(self.workout),str(self.lift),self.when_created)
 

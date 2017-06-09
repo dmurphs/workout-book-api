@@ -29,9 +29,12 @@ class ListWorkoutsView(ListAPIView):
         start_date = query_params['start_date'] if 'start_date' in query_params else default_date
         end_date = query_params['end_date'] if 'end_date' in query_params else default_date
 
-        filtered_sets = Workout.objects.filter(date__range=(start_date,start_date),user=self.request.user)
+        filtered_workouts = Workout.objects.filter(
+            date__range=(start_date,start_date),
+            user=self.request.user,
+            is_active=True)
 
-        return filtered_sets
+        return filtered_workouts
 
 class DetailWorkoutView(RetrieveAPIView):
     permission_classes = (ObjectUserMatches,)
@@ -124,7 +127,9 @@ class ListSetsView(ListAPIView):
     def get_queryset(self):
         lift_entry_id = self.kwargs['lift_entry_id']
         lift_entry = LiftEntry.objects.get(pk=lift_entry_id)
-        sets = Set.objects.filter(lift_entry=lift_entry)
+        sets = Set.objects.filter(
+            lift_entry=lift_entry,
+            is_active=True)
         return sets
 
 class DetailSetView(RetrieveAPIView):
@@ -156,7 +161,9 @@ class ListRunEntriesView(ListAPIView):
     def get_queryset(self):
         workout_id = self.kwargs['workout_id']
         workout = get_object_or_404(Workout.objects.all(), pk=workout_id)
-        run_entries = RunEntry.objects.filter(workout=workout)
+        run_entries = RunEntry.objects.filter(
+            workout=workout,
+            is_active=True)
         return run_entries
 
 class DetailRunEntryView(RetrieveAPIView):

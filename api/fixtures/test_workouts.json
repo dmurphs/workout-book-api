@@ -1,0 +1,41 @@
+[
+    {
+        "model": "api.workout",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "name": "Test Workout",
+            "description": "This is a test workout.",
+            "date": "2017-06-09",
+            "when_created": "2017-06-05 04:01:49.386835",
+            "when_modified": "2017-06-05 04:01:49.386835",
+            "is_active": true
+        }
+    },
+    {
+        "model": "api.workout",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "name": "Test Workout 2",
+            "description": "This is a test workout again.",
+            "date": "2017-06-09",
+            "when_created": "2017-06-05 04:01:49.386835",
+            "when_modified": "2017-06-05 04:01:49.386835",
+            "is_active": true
+        }
+    },
+    {
+        "model": "api.workout",
+        "pk": 3,
+        "fields": {
+            "user": 2,
+            "name": "Test Workout 3",
+            "description": "This is a test workout again again.",
+            "date": "2017-06-09",
+            "when_created": "2017-06-05 04:01:49.386835",
+            "when_modified": "2017-06-05 04:01:49.386835",
+            "is_active": true
+        }
+    }
+]
