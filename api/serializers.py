@@ -13,17 +13,18 @@ class LiftSerializer(serializers.ModelSerializer):
         model = Lift
         fields = ('id', 'name', 'description')
 
-class LiftEntrySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = LiftEntry
-        fields = ('id', 'lift',)
-
 class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Set
         fields = ('id', 'set_num', 'num_reps', 'weight')
+
+class LiftEntrySerializer(serializers.ModelSerializer):
+    lift = LiftSerializer()
+
+    class Meta:
+        model = LiftEntry
+        fields = ('id', 'lift', 'notes')
 
 class RunEntrySerializer(serializers.ModelSerializer):
 
