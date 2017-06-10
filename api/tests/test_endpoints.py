@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
@@ -35,6 +36,12 @@ class TestWorkouts(APITestCase):
         self.list_url = reverse('list_workouts')
         self.detail_url = reverse('workout_detail', args=[self.detail_id])
         self.update_url = reverse('update_workout', args=[self.detail_id])
+
+        #Change dates of workout objects to today for testing retrieval
+        workouts = Workout.objects.all()
+        for workout in workouts:
+            workout.date = date.today()
+            workout.save()
 
     def test_create_workout(self):
         '''Test creation of a workout'''
