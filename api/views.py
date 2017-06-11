@@ -30,7 +30,7 @@ class ListWorkoutsView(ListAPIView):
         end_date = query_params['end_date'] if 'end_date' in query_params else default_date
 
         filtered_workouts = Workout.objects.filter(
-            date__range=(start_date,start_date),
+            date__range=(start_date,end_date),
             user=self.request.user,
             is_active=True)
 

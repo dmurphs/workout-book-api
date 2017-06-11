@@ -1,0 +1,38 @@
+[
+    {
+        "model": "api.lift",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "name": "Test lift",
+            "description": "This is a test lift.",
+            "when_created": "2017-06-09T22:55:16+00:00",
+            "when_modified": "2017-06-09T22:55:16+00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "api.lift",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "name": "Test lift 2",
+            "description": "This is a test lift again.",
+            "when_created": "2017-06-09T22:55:16+00:00",
+            "when_modified": "2017-06-09T22:55:16+00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "api.lift",
+        "pk": 3,
+        "fields": {
+            "user": 2,
+            "name": "Test lift 3",
+            "description": "This is a test lift again again.",
+            "when_created": "2017-06-09T22:55:16+00:00",
+            "when_modified": "2017-06-09T22:55:16+00:00",
+            "is_active": true
+        }
+    }
+]
