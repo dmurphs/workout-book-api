@@ -12,12 +12,14 @@ class Base(models.Model):
 class Workout(Base):
     user = models.ForeignKey(User)
 
-    name = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     date = models.DateField()
 
     def __str__(self):
-        return self.name
+        if self.description:
+            return self.description
+        else:
+            return str(self.date)
 
 class Lift(Base):
     user = models.ForeignKey(User)

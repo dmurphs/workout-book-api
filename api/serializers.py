@@ -5,7 +5,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ('id', 'name', 'description', 'date')
+        fields = ('id', 'description', 'date')
 
 class LiftSerializer(serializers.ModelSerializer):
 
