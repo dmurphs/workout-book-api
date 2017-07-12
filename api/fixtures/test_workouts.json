@@ -4,7 +4,6 @@
         "pk": 1,
         "fields": {
             "user": 1,
-            "name": "Test Workout",
             "description": "This is a test workout.",
             "date": "2017-06-09",
             "when_created": "2017-06-09T22:55:16+00:00",
@@ -17,7 +16,6 @@
         "pk": 2,
         "fields": {
             "user": 1,
-            "name": "Test Workout 2",
             "description": "This is a test workout again.",
             "date": "2017-06-09",
             "when_created": "2017-06-09T22:55:16+00:00",
@@ -30,7 +28,6 @@
         "pk": 3,
         "fields": {
             "user": 2,
-            "name": "Test Workout 3",
             "description": "This is a test workout again again.",
             "date": "2017-06-09",
             "when_created": "2017-06-09T22:55:16+00:00",

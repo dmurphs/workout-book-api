@@ -24,17 +24,14 @@ class TestWorkouts(WorkoutBookAPITestCase):
         super().setUp()
 
         self.test_workout_data = {
-            'name': 'Test Workout',
             'description': 'This is a test',
             'date': '2017-06-08'
         }
 
-        self.update_name = 'Test Workout Update'
         self.update_description = 'Updated description'
         self.update_date = '2017-06-09'
 
         self.update_workout_data = {
-            'name': self.update_name,
             'description': self.update_description,
             'date': self.update_date
         }
@@ -102,7 +99,6 @@ class TestWorkouts(WorkoutBookAPITestCase):
 
         updated_workout = Workout.objects.get(pk=self.detail_id)
 
-        self.assertEquals(updated_workout.name, self.update_name)
         self.assertEquals(updated_workout.description, self.update_description)
         self.assertEquals(str(updated_workout.date), self.update_date)
 

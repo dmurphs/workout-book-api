@@ -72,12 +72,12 @@ urlpatterns = [
 
     #Lift Entries
     url(
-       regex=r'^(?P<workout_id>\d+)/new_lift_entry',
+       regex=r'^new_lift_entry/(?P<workout_id>\d+)',
        view=CreateLiftEntryView.as_view(),
        name='create_lift_entry'
     ),
     url(
-        regex=r'^(?P<workout_id>\d+)/list_lift_entries',
+        regex=r'^list_lift_entries/(?P<workout_id>\d+)',
         view=ListLiftEntriesView.as_view(),
         name='list_lift_entries'
     ),
@@ -94,12 +94,12 @@ urlpatterns = [
 
     # Sets
     url(
-        regex=r'^(?P<lift_entry_id>\d+)/create_set',
+        regex=r'^create_set/(?P<lift_entry_id>\d+)',
         view=CreateSetView.as_view(),
         name='create_set'
     ),
     url(
-        regex=r'^(?P<lift_entry_id>\d+)/list_sets',
+        regex=r'^list_sets/(?P<lift_entry_id>\d+)',
         view=ListSetsView.as_view(),
         name='list_sets'
     ),
@@ -116,12 +116,12 @@ urlpatterns = [
 
     # Run Entries
     url(
-       regex=r'^(?P<workout_id>\d+)/new_run_entry',
+       regex=r'^new_run_entry/(?P<workout_id>\d+)',
        view=CreateRunEntryView.as_view(),
        name='create_run_entry'
     ),
     url(
-        regex=r'^(?P<workout_id>\d+)/list_run_entries',
+        regex=r'^list_run_entries/(?P<workout_id>\d+)',
         view=ListRunEntriesView.as_view(),
         name='list_run_entries'
     ),
