@@ -20,8 +20,6 @@ class SetSerializer(serializers.ModelSerializer):
         fields = ('id', 'set_num', 'num_reps', 'weight')
 
 class LiftEntrySerializer(serializers.ModelSerializer):
-    lift = LiftSerializer()
-
     class Meta:
         model = LiftEntry
         fields = ('id', 'lift', 'notes')
