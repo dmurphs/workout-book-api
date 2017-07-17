@@ -5,7 +5,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ('id', 'description', 'date')
+        fields = ('id', 'description', 'date', 'is_active')
 
 class LiftSerializer(serializers.ModelSerializer):
 
@@ -17,15 +17,15 @@ class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Set
-        fields = ('id', 'set_num', 'num_reps', 'weight')
+        fields = ('id', 'set_num', 'num_reps', 'weight', 'is_active')
 
 class LiftEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = LiftEntry
-        fields = ('id', 'lift', 'notes')
+        fields = ('id', 'lift', 'notes', 'is_active')
 
 class RunEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RunEntry
-        fields = ('id', 'notes', 'distance', 'duration', 'elevation_delta')
+        fields = ('id', 'notes', 'distance', 'duration', 'elevation_delta', 'is_active')
