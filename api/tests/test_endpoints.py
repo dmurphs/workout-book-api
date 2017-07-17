@@ -38,10 +38,10 @@ class TestWorkouts(WorkoutBookAPITestCase):
 
         self.detail_id = 1
 
-        self.create_url = reverse('create_workout')
-        self.list_url = reverse('list_workouts')
+        self.create_url = reverse('workout_create')
+        self.list_url = reverse('workouts_list')
         self.detail_url = reverse('workout_detail', args=[self.detail_id])
-        self.update_url = reverse('update_workout', args=[self.detail_id])
+        self.update_url = reverse('workout_update', args=[self.detail_id])
 
         #Change dates of workout objects to today for testing retrieval
         workouts = Workout.objects.all()
@@ -130,10 +130,10 @@ class TestLifts(WorkoutBookAPITestCase):
 
         self.detail_id = 1
 
-        self.create_url = reverse('create_lift')
-        self.list_url = reverse('list_lifts')
+        self.create_url = reverse('lift_create')
+        self.list_url = reverse('lifts_list')
         self.detail_url = reverse('lift_detail', args=[self.detail_id])
-        self.update_url = reverse('update_lift', args=[self.detail_id])
+        self.update_url = reverse('lift_update', args=[self.detail_id])
 
     def test_create_lift(self):
         '''Test creation of a lift'''
