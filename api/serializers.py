@@ -17,7 +17,7 @@ class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Set
-        fields = ('id', 'set_num', 'num_reps', 'weight', 'is_active')
+        fields = ('id', 'num_reps', 'weight', 'is_active')
 
 class LiftEntrySerializer(serializers.ModelSerializer):
     class Meta:

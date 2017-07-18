@@ -45,7 +45,6 @@ class LiftEntry(Base):
 class Set(Base):
     lift_entry = models.ForeignKey(LiftEntry)
     
-    set_num = models.SmallIntegerField()
     num_reps = models.SmallIntegerField()
     weight = models.SmallIntegerField()
 
