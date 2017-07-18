@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', obtain_jwt_token),
-    url(r'^api/', include('api.urls'))
+    url(r'^api/', include('api.urls')),
+    url(r'^register/', include('register.urls'))
 ]
