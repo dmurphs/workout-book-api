@@ -25,7 +25,7 @@ class Lift(Base):
     user = models.ForeignKey(User)
 
     name = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -34,7 +34,7 @@ class LiftEntry(Base):
     workout = models.ForeignKey(Workout)
     lift = models.ForeignKey(Lift)
 
-    notes = models.TextField()
+    notes = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return 'Lift: {0}, {1}, {2}'.format(str(self.workout),str(self.lift),self.when_created)
@@ -51,7 +51,7 @@ class Set(Base):
 class RunEntry(Base):
     workout = models.ForeignKey(Workout)
 
-    notes = models.TextField()
+    notes = models.TextField(null=True, blank=True)
     distance = models.DecimalField(max_digits=5, decimal_places=2)
     duration = models.DurationField()
     elevation_delta = models.DecimalField(max_digits=7, decimal_places=2)
