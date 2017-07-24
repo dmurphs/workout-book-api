@@ -11,7 +11,7 @@ class LiftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lift
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'is_active')
 
 class SetSerializer(serializers.ModelSerializer):
 
