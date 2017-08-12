@@ -14,17 +14,8 @@ import os
 import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#lz5h4kp+e65r3i3fa5o!9+9ohrdl*#h_lu3h%&4uq))+v-s$x'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+print(BASE_DIR)
 
 ALLOWED_HOSTS = []
 
@@ -137,11 +128,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     )
 }
-
-# CORS Settings
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
-)
 
 # JWT Settings
 JWT_AUTH = {
