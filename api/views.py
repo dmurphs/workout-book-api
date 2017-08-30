@@ -79,6 +79,20 @@ class UpdateLiftView(UpdateAPIView):
     serializer_class = LiftSerializer
     queryset = Lift.objects.filter(is_active=True)
 
+    # def perform_update(self,serializer):
+    #     serializer.save()
+
+    #     data = serializer.data
+
+    #     # If lift is inactivated, need to cascade inactivate associated lift entries
+    #     if not data['is_active']:
+    #         lift_id = data['id']
+    #         lift_entries = LiftEntry.objects.filter(lift_id=lift_id)
+
+    #         for lift_entry in lift_entries:
+    #             lift_entry.is_active = False
+    #             lift_entry.save()
+
 # Lift Entry Views
 class CreateLiftEntryView(CreateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
@@ -98,20 +112,21 @@ class ListLiftEntriesView(ListAPIView):
         workout = get_object_or_404(Workout.objects.all(), pk=workout_id)
         lift_entries = LiftEntry.objects.filter(
             workout=workout,
-            is_active=True)
+            is_active=True,
+            lift__is_active=True)
         return lift_entries
 
 class DetailLiftEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True)
 
 class UpdateLiftEntryView(UpdateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True)
 
 
 # Set Views
