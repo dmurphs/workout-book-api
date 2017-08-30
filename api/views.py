@@ -113,20 +113,21 @@ class ListLiftEntriesView(ListAPIView):
         lift_entries = LiftEntry.objects.filter(
             workout=workout,
             is_active=True,
-            lift__is_active=True)
+            lift__is_active=True,
+            workout__is_active=True)
         return lift_entries
 
 class DetailLiftEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True, workout__is_active=True)
 
 class UpdateLiftEntryView(UpdateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True, workout__is_active=True)
 
 
 # Set Views
@@ -148,20 +149,21 @@ class ListSetsView(ListAPIView):
         lift_entry = LiftEntry.objects.get(pk=lift_entry_id)
         sets = Set.objects.filter(
             lift_entry=lift_entry,
-            is_active=True)
+            is_active=True,
+            lift_entry__is_active=True)
         return sets
 
 class DetailSetView(RetrieveAPIView):
     permission_classes = (ParentEntryWorkoutUserMatches,)
 
     serializer_class = SetSerializer
-    queryset = Set.objects.filter(is_active=True)
+    queryset = Set.objects.filter(is_active=True, lift_entry__is_active=True)
 
 class UpdateSetView(UpdateAPIView):
     permission_classes = (ParentEntryWorkoutUserMatches,)
 
     serializer_class = SetSerializer
-    queryset = Set.objects.filter(is_active=True)
+    queryset = Set.objects.filter(is_active=True, lift_entry__is_active=True)
 
 # Run Entry Views
 class CreateRunEntryView(CreateAPIView):
@@ -182,17 +184,18 @@ class ListRunEntriesView(ListAPIView):
         workout = get_object_or_404(Workout.objects.all(), pk=workout_id)
         run_entries = RunEntry.objects.filter(
             workout=workout,
-            is_active=True)
+            is_active=True,
+            workout__is_active=True)
         return run_entries
 
 class DetailRunEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = RunEntrySerializer
-    queryset = RunEntry.objects.filter(is_active=True)
+    queryset = RunEntry.objects.filter(is_active=True, workout__is_active=True)
 
 class UpdateRunEntryView(UpdateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = RunEntrySerializer
-    queryset = RunEntry.objects.filter(is_active=True)
+    queryset = RunEntry.objects.filter(is_active=True, workout__is_active=True)
