@@ -1,5 +1,6 @@
 import datetime
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView,UpdateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -29,12 +30,16 @@ class ListWorkoutsView(ListAPIView):
         start_date = query_params['start_date'] if 'start_date' in query_params else default_date
         end_date = query_params['end_date'] if 'end_date' in query_params else default_date
 
-        filtered_workouts = Workout.objects.filter(
-            date__range=(start_date,end_date),
-            user=self.request.user,
-            is_active=True)
+        try:
+            filtered_workouts = Workout.objects.filter(
+                date__range=(start_date,end_date),
+                user=self.request.user,
+                is_active=True)
+            return filtered_workouts
 
-        return filtered_workouts
+        except ValidationError as e:
+            # Invalid values in query parameters
+            return None
 
 class DetailWorkoutView(RetrieveAPIView):
     permission_classes = (ObjectUserMatches,)
