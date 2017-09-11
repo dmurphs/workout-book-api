@@ -8,12 +8,12 @@ DATABASES['default'].update(db_from_env)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 # CORS Settings
 CORS_ORIGIN_WHITELIST = ()
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['workout-book-api.herokuapp.com']
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
@@ -21,3 +21,7 @@ ALLOWED_HOSTS = ['*']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ADMINS = (
+    ('Daniel Murphy', 'd.p.murph19@gmail.com'),
+)
