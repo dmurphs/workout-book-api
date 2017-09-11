@@ -64,20 +64,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'workout-book-api.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'localhost',
-        'NAME': 'workoutbookapi',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres'
-    }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
