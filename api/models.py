@@ -46,7 +46,7 @@ class Set(Base):
     lift_entry = models.ForeignKey(LiftEntry)
     
     num_reps = models.SmallIntegerField()
-    weight = models.SmallIntegerField()
+    weight = models.SmallIntegerField(null=True)
 
 class RunEntry(Base):
     workout = models.ForeignKey(Workout)
