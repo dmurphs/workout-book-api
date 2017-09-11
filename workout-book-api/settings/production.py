@@ -13,7 +13,7 @@ DEBUG = False
 # CORS Settings
 CORS_ORIGIN_WHITELIST = ()
 
-ALLOWED_HOSTS = ['workout-book-api.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
