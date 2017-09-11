@@ -8,7 +8,7 @@ DATABASES['default'].update(db_from_env)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 # CORS Settings
 CORS_ORIGIN_WHITELIST = ()
