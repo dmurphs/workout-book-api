@@ -21,3 +21,5 @@ DEBUG = False
 
 # CORS Settings
 CORS_ORIGIN_WHITELIST = ()
+
+ALLOWED_HOSTS = ['workout-book-api.herokuapp.com']
