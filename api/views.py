@@ -35,7 +35,7 @@ class ListWorkoutsView(ListAPIView):
                 date__range=(start_date,end_date),
                 user=self.request.user,
                 is_active=True)
-            return filtered_workouts
+            return filtered_workouts.order_by('-date')
 
         except ValidationError as e:
             # Invalid values in query parameters
