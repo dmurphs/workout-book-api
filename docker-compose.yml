@@ -14,3 +14,20 @@ services:
       - "8000:8000"
     depends_on:
       - redis
+
+  db:
+    image: postgres:alpine
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes_from:
+      - data
+    networks:
+      - default
+      
+  data:
+    image: alpine:latest
+    volumes:
+      - /var/lib/postgresql/data/pgdata
+      - /srv/static
+      - /srv/media
+    command: echo "Data container doing its job!"

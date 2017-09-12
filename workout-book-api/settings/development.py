@@ -32,10 +32,10 @@ SESSION_CACHE_ALIAS = "default"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'localhost',
-        'NAME': 'workoutbookapi',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgres'
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
