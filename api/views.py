@@ -119,7 +119,7 @@ class ListLiftEntriesView(ListAPIView):
             workout=workout,
             is_active=True,
             lift__is_active=True,
-            workout__is_active=True)
+            workout__is_active=True).order_by('when_created')
         return lift_entries
 
 class DetailLiftEntryView(RetrieveAPIView):
@@ -190,7 +190,7 @@ class ListRunEntriesView(ListAPIView):
         run_entries = RunEntry.objects.filter(
             workout=workout,
             is_active=True,
-            workout__is_active=True)
+            workout__is_active=True).order_by('when_created')
         return run_entries
 
 class DetailRunEntryView(RetrieveAPIView):
