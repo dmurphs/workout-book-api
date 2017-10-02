@@ -5,9 +5,9 @@ from rest_framework.generics import CreateAPIView,UpdateAPIView, ListAPIView, Re
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Lift, LiftEntry, Set, Workout, RunEntry
+from .models import Lift, LiftEntry, Set, Workout, Run, RunEntry
 from .permissions import ObjectUserMatches, ParentWorkoutUserMatches, ParentEntryWorkoutUserMatches
-from .serializers import LiftSerializer, LiftEntrySerializer, SetSerializer, WorkoutSerializer, RunEntrySerializer
+from .serializers import LiftSerializer, LiftEntrySerializer, SetSerializer, WorkoutSerializer, RunSerializer, RunEntrySerializer
 
 # Workout Views
 class CreateWorkoutView(CreateAPIView):
@@ -170,6 +170,17 @@ class UpdateSetView(UpdateAPIView):
     serializer_class = SetSerializer
     queryset = Set.objects.filter(is_active=True, lift_entry__is_active=True)
 
+# Run Views
+class ListRunsView(ListAPIView):
+    permission_classes = (ObjectUserMatches,)
+
+    serializer_class = RunSerializer
+
+    def get_queryset(self):
+        return Run.objects.filter(
+            user=self.request.user,
+            is_active=True)
+
 # Run Entry Views
 class CreateRunEntryView(CreateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
@@ -204,3 +215,4 @@ class UpdateRunEntryView(UpdateAPIView):
 
     serializer_class = RunEntrySerializer
     queryset = RunEntry.objects.filter(is_active=True, workout__is_active=True)
+    

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Workout, Lift, LiftEntry, Set, RunEntry
+from .models import Workout, Lift, LiftEntry, Set, Run, RunEntry
 
 class WorkoutSerializer(serializers.ModelSerializer):
 
@@ -24,8 +24,15 @@ class LiftEntrySerializer(serializers.ModelSerializer):
         model = LiftEntry
         fields = ('id', 'lift', 'notes', 'is_active')
 
+class RunSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Run
+        fields = ('id', 'name', 'distance', 'elevation_delta')
+
 class RunEntrySerializer(serializers.ModelSerializer):
+    run = RunSerializer(read_only=True)
+    run_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = RunEntry
-        fields = ('id', 'notes', 'distance', 'duration', 'elevation_delta', 'is_active')
+        fields = ('id', 'run', 'run_id', 'notes', 'duration', 'is_active')

@@ -20,6 +20,8 @@ from .views import (
     DetailSetView,
     UpdateSetView,
 
+    ListRunsView,
+
     CreateRunEntryView,
     ListRunEntriesView,
     DetailRunEntryView,
@@ -112,6 +114,13 @@ urlpatterns = [
         regex=r'^set_update/(?P<pk>\d+)',
         view=UpdateSetView.as_view(),
         name='set_update'
+    ),
+
+    # Runs
+    url(
+        regex=r'^runs_list',
+        view=ListRunsView.as_view(),
+        name='runs_list'
     ),
 
     # Run Entries
