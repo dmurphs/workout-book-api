@@ -1,21 +1,21 @@
 from django.conf.urls import url
 from .views import (
-    CreateWorkoutView, 
-    ListWorkoutsView, 
-    DetailWorkoutView, 
+    CreateWorkoutView,
+    ListWorkoutsView,
+    DetailWorkoutView,
     UpdateWorkoutView,
 
-    CreateLiftView, 
-    ListLiftsView, 
-    DetailLiftView, 
-    UpdateLiftView, 
+    CreateLiftView,
+    ListLiftsView,
+    DetailLiftView,
+    UpdateLiftView,
 
     CreateLiftEntryView,
     ListLiftEntriesView,
     DetailLiftEntryView,
     UpdateLiftEntryView,
 
-    CreateSetView, 
+    CreateSetView,
     ListSetsView,
     DetailSetView,
     UpdateSetView,
@@ -28,7 +28,7 @@ from .views import (
     UpdateRunEntryView)
 
 urlpatterns = [
-    #Workouts
+    # Workouts
     url(
        regex=r'^workout_create',
        view=CreateWorkoutView.as_view(),
@@ -72,7 +72,7 @@ urlpatterns = [
         name='lift_update'
     ),
 
-    #Lift Entries
+    # Lift Entries
     url(
        regex=r'^lift_entry_create/(?P<workout_id>\d+)',
        view=CreateLiftEntryView.as_view(),
@@ -145,3 +145,4 @@ urlpatterns = [
         name='update_run_entry'
     )
 ]
+

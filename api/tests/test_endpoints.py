@@ -6,6 +6,7 @@ from rest_framework.test import APITestCase, APIClient
 
 from api.models import Workout, Lift
 
+
 class WorkoutBookAPITestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.get(username='test_user_1')
@@ -16,6 +17,7 @@ class WorkoutBookAPITestCase(APITestCase):
         new_user = User.objects.get(username=username)
         self.client = APIClient()
         self.client.force_authenticate(user=new_user)
+
 
 class TestWorkouts(WorkoutBookAPITestCase):
     fixtures = ['test_users', 'test_workouts']
@@ -43,7 +45,7 @@ class TestWorkouts(WorkoutBookAPITestCase):
         self.detail_url = reverse('workout_detail', args=[self.detail_id])
         self.update_url = reverse('workout_update', args=[self.detail_id])
 
-        #Change dates of workout objects to today for testing retrieval
+        # Change dates of workout objects to today for testing retrieval
         workouts = Workout.objects.all()
         for workout in workouts:
             workout.date = date.today()
@@ -53,11 +55,13 @@ class TestWorkouts(WorkoutBookAPITestCase):
         '''Test creation of a workout'''
         num_existing_workouts = len(Workout.objects.filter(user=self.user))
 
-        response = self.client.post(self.create_url, self.test_workout_data, format='json')
+        response = self.client.post(self.create_url,
+                                    self.test_workout_data,
+                                    format='json')
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
         num_workouts = len(Workout.objects.filter(user=self.user))
-        self.assertEquals(num_workouts,num_existing_workouts + 1)
+        self.assertEquals(num_workouts, num_existing_workouts + 1)
 
     def test_user_workout_list(self):
         '''Test retrieval of user''s workout with default date range'''
@@ -68,12 +72,12 @@ class TestWorkouts(WorkoutBookAPITestCase):
         workout_ids = [rec['id'] for rec in response.data]
         workouts = Workout.objects.filter(pk__in=workout_ids)
         workout_user_ids = set([workout.user.id for workout in workouts])
-        
-        self.assertEquals(len(workout_user_ids),1)
+
+        self.assertEquals(len(workout_user_ids), 1)
 
         (workout_user_id,) = workout_user_ids
 
-        self.assertEquals(workout_user_id,self.user.id)
+        self.assertEquals(workout_user_id, self.user.id)
 
     def test_workout_detail(self):
         '''Test workout detail view for one of user''s own workouts'''
@@ -82,7 +86,7 @@ class TestWorkouts(WorkoutBookAPITestCase):
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
     def test_workout_detail_with_different_user(self):
-        '''Test workout detail view for workout belonging to a different user'''
+        '''Test workout detail view for workout belonging to different user'''
         # authenticate new user
         self.auth_other_user('test_user_2')
 
@@ -93,8 +97,10 @@ class TestWorkouts(WorkoutBookAPITestCase):
     def test_update_workout(self):
         '''Test update for one of user''s workouts'''
 
-        response = self.client.put(self.update_url, self.update_workout_data, format='json')
-        
+        response = self.client.put(self.update_url,
+                                   self.update_workout_data,
+                                   format='json')
+
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         updated_workout = Workout.objects.get(pk=self.detail_id)
@@ -106,9 +112,12 @@ class TestWorkouts(WorkoutBookAPITestCase):
         '''Test workout update view for workout belonging to different user'''
         self.auth_other_user('test_user_2')
 
-        response = self.client.put(self.update_url, self.update_workout_data, format='json')
+        response = self.client.put(self.update_url,
+                                   self.update_workout_data,
+                                   format='json')
 
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
+
 
 class TestLifts(WorkoutBookAPITestCase):
     fixtures = ['test_users', 'test_lifts']
@@ -139,11 +148,13 @@ class TestLifts(WorkoutBookAPITestCase):
         '''Test creation of a lift'''
         num_existing_lifts = len(Lift.objects.filter(user=self.user))
 
-        response = self.client.post(self.create_url, self.test_lift_data, format='json')
+        response = self.client.post(self.create_url,
+                                    self.test_lift_data,
+                                    format='json')
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
         num_lifts = len(Lift.objects.filter(user=self.user))
-        self.assertEquals(num_lifts,num_existing_lifts + 1)
+        self.assertEquals(num_lifts, num_existing_lifts + 1)
 
     def test_user_lift_list(self):
         '''Test retrieval of user''s lifts with default date range'''
@@ -154,12 +165,12 @@ class TestLifts(WorkoutBookAPITestCase):
         lift_ids = [rec['id'] for rec in response.data]
         lifts = Lift.objects.filter(pk__in=lift_ids)
         lift_user_ids = set([lift.user.id for lift in lifts])
-        
-        self.assertEquals(len(lift_user_ids),1)
+
+        self.assertEquals(len(lift_user_ids), 1)
 
         (lift_user_id,) = lift_user_ids
 
-        self.assertEquals(lift_user_id,self.user.id)
+        self.assertEquals(lift_user_id, self.user.id)
 
     def test_lift_detail(self):
         '''Test lift detail view for one of user''s own lifts'''
@@ -179,8 +190,10 @@ class TestLifts(WorkoutBookAPITestCase):
     def test_update_lift(self):
         '''Test update for one of user''s lifts'''
 
-        response = self.client.put(self.update_url, self.update_lift_data, format='json')
-        
+        response = self.client.put(self.update_url,
+                                   self.update_lift_data,
+                                   format='json')
+
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         updated_lift = Lift.objects.get(pk=self.detail_id)
@@ -192,7 +205,9 @@ class TestLifts(WorkoutBookAPITestCase):
         '''Test lift update view for lift belonging to different user'''
         self.auth_other_user('test_user_2')
 
-        response = self.client.put(self.update_url, self.update_lift_data, format='json')
+        response = self.client.put(self.update_url,
+                                   self.update_lift_data,
+                                   format='json')
 
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
 

@@ -7,3 +7,4 @@ admin.site.register(Set)
 admin.site.register(Run)
 admin.site.register(RunEntry)
 admin.site.register(Workout)
+

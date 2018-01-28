@@ -1,13 +1,22 @@
 import datetime
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView,UpdateAPIView, ListAPIView, RetrieveAPIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.generics import (CreateAPIView,
+                                     UpdateAPIView,
+                                     ListAPIView,
+                                     RetrieveAPIView)
 
 from .models import Lift, LiftEntry, Set, Workout, Run, RunEntry
-from .permissions import ObjectUserMatches, ParentWorkoutUserMatches, ParentEntryWorkoutUserMatches
-from .serializers import LiftSerializer, LiftEntrySerializer, SetSerializer, WorkoutSerializer, RunSerializer, RunEntrySerializer
+from .permissions import (ObjectUserMatches,
+                          ParentWorkoutUserMatches,
+                          ParentEntryWorkoutUserMatches)
+from .serializers import (LiftSerializer,
+                          LiftEntrySerializer,
+                          SetSerializer,
+                          WorkoutSerializer,
+                          RunSerializer,
+                          RunEntrySerializer)
+
 
 # Workout Views
 class CreateWorkoutView(CreateAPIView):
@@ -15,8 +24,9 @@ class CreateWorkoutView(CreateAPIView):
 
     serializer_class = WorkoutSerializer
 
-    def perform_create(self,serializer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 class ListWorkoutsView(ListAPIView):
     permission_classes = (ObjectUserMatches,)
@@ -27,12 +37,16 @@ class ListWorkoutsView(ListAPIView):
         default_date = datetime.datetime.now().date()
 
         query_params = self.request.query_params
-        start_date = query_params['start_date'] if 'start_date' in query_params else default_date
-        end_date = query_params['end_date'] if 'end_date' in query_params else default_date
+        start_date = query_params['start_date'] \
+            if 'start_date' in query_params \
+            else default_date
+        end_date = query_params['end_date'] \
+            if 'end_date' in query_params \
+            else default_date
 
         try:
             filtered_workouts = Workout.objects.filter(
-                date__range=(start_date,end_date),
+                date__range=(start_date, end_date),
                 user=self.request.user,
                 is_active=True)
             return filtered_workouts.order_by('-date')
@@ -41,11 +55,13 @@ class ListWorkoutsView(ListAPIView):
             # Invalid values in query parameters
             return None
 
+
 class DetailWorkoutView(RetrieveAPIView):
     permission_classes = (ObjectUserMatches,)
 
     serializer_class = WorkoutSerializer
     queryset = Workout.objects.filter(is_active=True)
+
 
 class UpdateWorkoutView(UpdateAPIView):
     permission_classes = (ObjectUserMatches,)
@@ -53,14 +69,16 @@ class UpdateWorkoutView(UpdateAPIView):
     serializer_class = WorkoutSerializer
     queryset = Workout.objects.filter(is_active=True)
 
+
 # Lift Views
 class CreateLiftView(CreateAPIView):
     permission_classes = (ObjectUserMatches,)
 
     serializer_class = LiftSerializer
 
-    def perform_create(self,serializer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 class ListLiftsView(ListAPIView):
     permission_classes = (ObjectUserMatches,)
@@ -72,11 +90,13 @@ class ListLiftsView(ListAPIView):
             user=self.request.user,
             is_active=True)
 
+
 class DetailLiftView(RetrieveAPIView):
     permission_classes = (ObjectUserMatches,)
 
     serializer_class = LiftSerializer
     queryset = Lift.objects.filter(is_active=True)
+
 
 class UpdateLiftView(UpdateAPIView):
     permission_classes = (ObjectUserMatches,)
@@ -89,7 +109,8 @@ class UpdateLiftView(UpdateAPIView):
 
     #     data = serializer.data
 
-    #     # If lift is inactivated, need to cascade inactivate associated lift entries
+    #     # If lift is inactivated, need to cascade inactivate associated
+    #     # lift entries
     #     if not data['is_active']:
     #         lift_id = data['id']
     #         lift_entries = LiftEntry.objects.filter(lift_id=lift_id)
@@ -97,6 +118,7 @@ class UpdateLiftView(UpdateAPIView):
     #         for lift_entry in lift_entries:
     #             lift_entry.is_active = False
     #             lift_entry.save()
+
 
 # Lift Entry Views
 class CreateLiftEntryView(CreateAPIView):
@@ -107,6 +129,7 @@ class CreateLiftEntryView(CreateAPIView):
         workout_id = self.kwargs['workout_id']
         workout = Workout.objects.get(pk=workout_id)
         serializer.save(workout=workout)
+
 
 class ListLiftEntriesView(ListAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
@@ -122,17 +145,23 @@ class ListLiftEntriesView(ListAPIView):
             workout__is_active=True)
         return lift_entries
 
+
 class DetailLiftEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True, workout__is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True,
+                                        lift__is_active=True,
+                                        workout__is_active=True)
+
 
 class UpdateLiftEntryView(UpdateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer
-    queryset = LiftEntry.objects.filter(is_active=True, lift__is_active=True, workout__is_active=True)
+    queryset = LiftEntry.objects.filter(is_active=True,
+                                        lift__is_active=True,
+                                        workout__is_active=True)
 
 
 # Set Views
@@ -144,6 +173,7 @@ class CreateSetView(CreateAPIView):
         lift_entry_id = self.kwargs['lift_entry_id']
         lift_entry = LiftEntry.objects.get(pk=lift_entry_id)
         serializer.save(lift_entry=lift_entry)
+
 
 class ListSetsView(ListAPIView):
     permission_classes = (ParentEntryWorkoutUserMatches,)
@@ -158,17 +188,20 @@ class ListSetsView(ListAPIView):
             lift_entry__is_active=True)
         return sets
 
+
 class DetailSetView(RetrieveAPIView):
     permission_classes = (ParentEntryWorkoutUserMatches,)
 
     serializer_class = SetSerializer
     queryset = Set.objects.filter(is_active=True, lift_entry__is_active=True)
 
+
 class UpdateSetView(UpdateAPIView):
     permission_classes = (ParentEntryWorkoutUserMatches,)
 
     serializer_class = SetSerializer
     queryset = Set.objects.filter(is_active=True, lift_entry__is_active=True)
+
 
 # Run Views
 class ListRunsView(ListAPIView):
@@ -181,6 +214,7 @@ class ListRunsView(ListAPIView):
             user=self.request.user,
             is_active=True)
 
+
 # Run Entry Views
 class CreateRunEntryView(CreateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
@@ -190,6 +224,7 @@ class CreateRunEntryView(CreateAPIView):
         workout_id = self.kwargs['workout_id']
         workout = Workout.objects.get(pk=workout_id)
         serializer.save(workout=workout)
+
 
 class ListRunEntriesView(ListAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
@@ -204,15 +239,17 @@ class ListRunEntriesView(ListAPIView):
             workout__is_active=True)
         return run_entries
 
+
 class DetailRunEntryView(RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = RunEntrySerializer
     queryset = RunEntry.objects.filter(is_active=True, workout__is_active=True)
 
+
 class UpdateRunEntryView(UpdateAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = RunEntrySerializer
     queryset = RunEntry.objects.filter(is_active=True, workout__is_active=True)
-    
+

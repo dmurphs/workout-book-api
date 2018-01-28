@@ -8,3 +8,4 @@ urlpatterns = [
        name='user_create'
     ),
 ]
+

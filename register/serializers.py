@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import password_validation
 from django.contrib.auth.models import User
 
+
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
 
@@ -23,3 +24,4 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'email')
         write_only_fields = ('password',)
+
