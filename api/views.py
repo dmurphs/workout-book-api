@@ -5,6 +5,7 @@ from rest_framework.generics import (CreateAPIView,
                                      UpdateAPIView,
                                      ListAPIView,
                                      RetrieveAPIView)
+from rest_framework_serializer_extensions.views import SerializerExtensionsAPIViewMixin
 
 from .models import Lift, LiftEntry, Set, Workout, Run, RunEntry
 from .permissions import (ObjectUserMatches,
@@ -56,7 +57,7 @@ class ListWorkoutsView(ListAPIView):
             return None
 
 
-class DetailWorkoutView(RetrieveAPIView):
+class DetailWorkoutView(SerializerExtensionsAPIViewMixin, RetrieveAPIView):
     permission_classes = (ObjectUserMatches,)
 
     serializer_class = WorkoutSerializer

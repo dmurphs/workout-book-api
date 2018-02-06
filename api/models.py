@@ -41,7 +41,7 @@ class Lift(Base):
 
 
 class LiftEntry(Base):
-    workout = models.ForeignKey(Workout)
+    workout = models.ForeignKey(Workout, related_name='lift_entries')
     lift = models.ForeignKey(Lift)
 
     notes = models.TextField(null=True, blank=True)
@@ -54,7 +54,7 @@ class LiftEntry(Base):
 
 
 class Set(Base):
-    lift_entry = models.ForeignKey(LiftEntry)
+    lift_entry = models.ForeignKey(LiftEntry, related_name='sets')
 
     num_reps = models.SmallIntegerField()
     weight = models.SmallIntegerField(null=True)
@@ -72,7 +72,7 @@ class Run(Base):
 
 
 class RunEntry(Base):
-    workout = models.ForeignKey(Workout)
+    workout = models.ForeignKey(Workout, related_name='run_entries')
     run = models.ForeignKey(Run)
 
     notes = models.TextField(null=True, blank=True)
