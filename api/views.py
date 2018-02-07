@@ -147,7 +147,7 @@ class ListLiftEntriesView(ListAPIView):
         return lift_entries
 
 
-class DetailLiftEntryView(RetrieveAPIView):
+class DetailLiftEntryView(SerializerExtensionsAPIViewMixin, RetrieveAPIView):
     permission_classes = (ParentWorkoutUserMatches,)
 
     serializer_class = LiftEntrySerializer

@@ -20,24 +20,30 @@ class SetSerializer(ModelSerializer):
         fields = ('id', 'num_reps', 'weight', 'is_active')
 
 
-class LiftEntrySerializer(ModelSerializer):
+class LiftEntrySerializer(SerializerExtensionsMixin, ModelSerializer):
     class Meta:
         model = LiftEntry
         fields = ('id', 'lift', 'notes', 'is_active')
-
-
-class RunEntrySerializer(ModelSerializer):
-
-    class Meta:
-        model = RunEntry
-        fields = ('id', 'run', 'notes', 'duration', 'is_active')
+        expandable_fields = dict(
+            sets=dict(serializer=SetSerializer, many=True),
+            lift=dict(serializer=LiftSerializer)
+        )
 
 
 class RunSerializer(ModelSerializer):
     class Meta:
         model = Run
         fields = ('id', 'name', 'distance', 'elevation_delta')
-        expandable_fields = dict(run_entries=RunEntrySerializer)
+
+
+class RunEntrySerializer(SerializerExtensionsMixin, ModelSerializer):
+
+    class Meta:
+        model = RunEntry
+        fields = ('id', 'run', 'notes', 'duration', 'is_active')
+        expandable_fields = dict(
+            run=dict(serializer=RunSerializer)
+        )
 
 
 class WorkoutSerializer(SerializerExtensionsMixin, ModelSerializer):
@@ -46,5 +52,6 @@ class WorkoutSerializer(SerializerExtensionsMixin, ModelSerializer):
         model = Workout
         fields = ('id', 'description', 'date', 'is_active', 'lift_entries')
         expandable_fields = dict(
-            lift_entries=dict(serializer=LiftEntrySerializer, many=True)
+            lift_entries=dict(serializer=LiftEntrySerializer, many=True),
+            run_entries=dict(serializer=RunEntrySerializer, many=True)
         )
